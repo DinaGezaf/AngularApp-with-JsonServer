@@ -1,0 +1,51 @@
+<div class="container text-center bg-dark text-light rounded m-5 p-5">
+  <h1 class="lead py-3">Users List</h1>
+
+  <table class="table text-light">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let user of users">
+      <tr>
+        <th scope="row">{{ user.id }}</th>
+        <td>{{ user.Username }}</td>
+        <td>{{ user.Email }}</td>
+        <td>{{ user.Password }}</td>
+        <td>
+          <div class="row">
+            <div class="col-lg-3 col-sm-6">
+              <button
+                class="btn btn-primary"
+                routerLink="/userDetails/{{ user.id }}"
+              >
+                Show User
+              </button>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+              <button
+                class="btn btn-warning"
+                routerLink="/addUser/{{ user.id }}"
+              >
+                Edit User
+              </button>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+              <button
+                class="btn btn-danger"
+                (click)="deleteUserHandler(user.id)"
+              >
+                Delete User
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

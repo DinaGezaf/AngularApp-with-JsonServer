@@ -1,0 +1,72 @@
+<div
+  class="container my-5 shadow-lg p-5 bg-body-tertiary rounded w-50 d-flex justify-content-center"
+>
+  <form [formGroup]="userForm" (ngSubmit)="Login($event)">
+    <div class="mb-3">
+      <label for="exampleInputUsername1" class="form-label">Username</label>
+      <input
+        type="username"
+        class="form-control"
+        id="exampleInputUsername1"
+        formControlName="Username"
+        placeholder="Enter your Username"
+      />
+      <div
+        class="text-danger p-1"
+        *ngIf="
+          userForm.get('Username')?.invalid &&
+          (userForm.get('Username')?.dirty || userForm.get('Username')?.touched)
+        "
+      >
+        Please provide a valid Username.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        formControlName="Email"
+        placeholder="Enter your Email"
+      />
+      <div
+        class="text-danger p-1"
+        *ngIf="
+          userForm.get('Email')?.invalid &&
+          (userForm.get('Email')?.dirty || userForm.get('Email')?.touched)
+        "
+      >
+        Please provide a valid Email.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="exampleInputPassword1"
+        formControlName="Password"
+        placeholder="Enter your Password"
+      />
+      <div
+        class="text-danger p-1"
+        *ngIf="
+          userForm.get('Password')?.invalid &&
+          (userForm.get('Password')?.dirty || userForm.get('Password')?.touched)
+        "
+      >
+        Please provide a valid Password.
+      </div>
+    </div>
+    <div class="text-center m-4">
+      <button type="submit" class="btn btn-primary">
+        {{ userId ? "Edit User" : "Add New User" }}
+      </button>
+      <button class="btn btn-warning mx-5" (click)="backToHome()">
+        Back To Home
+      </button>
+    </div>
+  </form>
+</div>
