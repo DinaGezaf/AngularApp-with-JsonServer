@@ -11,13 +11,6 @@ import { UserService } from '../user.service';
 export class UserFormComponent implements OnInit {
   userId: any;
   userData: any;
-  constructor(
-    public activatedRoute: ActivatedRoute,
-    private userService: UserService,
-    public router: Router
-  ) {
-    this.userId = this.activatedRoute.snapshot.params['id'];
-  }
 
   userForm = new FormGroup({
     Username: new FormControl('', [
@@ -28,12 +21,31 @@ export class UserFormComponent implements OnInit {
     Email: new FormControl('', [Validators.required, Validators.email]),
     Password: new FormControl('', [
       Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(10),
+      Validators.minLength(7),
+      Validators.maxLength(15),
     ]),
   });
 
-  Login(e: Event) {
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    public router: Router
+  ) {
+    this.userId = this.activatedRoute.snapshot.params['id'];
+  }
+  ngOnInit(): void {
+    if (this.userId) {
+      this.userService.getUserById(this.userId).subscribe((response) => {
+        this.userData = response;
+        this.userForm.setValue({
+          Username: this.userData.Username,
+          Email: this.userData.Email,
+          Password: this.userData.Password,
+        });
+      });
+    }
+  }
+  SaveData(e: Event) {
     e.preventDefault();
     this.userData = this.userForm.value;
     if (this.userId) {
@@ -50,18 +62,7 @@ export class UserFormComponent implements OnInit {
       });
     }
   }
-  ngOnInit(): void {
-    if (this.userId) {
-      this.userService.getUserById(this.userId).subscribe((response) => {
-        this.userData = response;
-        this.userForm.setValue({
-          Username: this.userData.Username,
-          Email: this.userData.Email,
-          Password: this.userData.Password,
-        });
-      });
-    }
-  }
+
   backToHome() {
     this.router.navigate(['/users']);
   }
